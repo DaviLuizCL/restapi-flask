@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
 from flask_mongoengine import MongoEngine
 from mongoengine import NotUniqueError
@@ -49,7 +49,7 @@ class UserModel(db.Document):
 
 class Users(Resource):
     def get(self):
-        return {'message': 'user1'}
+        return jsonify(UserModel.objects())
 
 
 class User(Resource):
@@ -57,20 +57,25 @@ class User(Resource):
         data = _user_parser.parse_args()
         if not cpf.validate(data["cpf"]):
             return {"message": "CPF is invalid!"}, 400
-        
+
         try:
 
             response = UserModel(**data).save()
             return {"message": f"user {response.id} successfully created!"}
-        
+
         except NotUniqueError:
             return {"message": "CPF already exists in database"}, 400
-    def get(self):
-        return {'message': 'teste'}
+
+    def get(self, cpf):
+        response = UserModel.objects(cpf=cpf)
+        if response:
+
+            return jsonify(response)
+        return {"message": "User does not exist in database"}, 400
 
 
 api.add_resource(Users, '/users')
-api.add_resource(User, '/user')
+api.add_resource(User, '/user', '/user/<string:cpf>')
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
