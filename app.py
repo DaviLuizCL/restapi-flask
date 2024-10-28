@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from flask_mongoengine import MongoEngine
+from mongoengine import NotUniqueError
+from validate_docbr import CPF
 
 app = Flask(__name__)
 app.config['MONGODB_SETTINGS'] = {
@@ -34,6 +36,7 @@ _user_parser.add_argument('birth_date',
 
 api = Api(app)
 db = MongoEngine(app)
+cpf = CPF()
 
 
 class UserModel(db.Document):
@@ -52,8 +55,16 @@ class Users(Resource):
 class User(Resource):
     def post(self):
         data = _user_parser.parse_args()
-        UserModel(**data).save()
-        return data
+        if not cpf.validate(data["cpf"]):
+            return {"message": "CPF is invalid!"}, 400
+        
+        try:
+
+            response = UserModel(**data).save()
+            return {"message": f"user {response.id} successfully created!"}
+        
+        except NotUniqueError:
+            return {"message": "CPF already exists in database"}, 400
     def get(self):
         return {'message': 'teste'}
 
