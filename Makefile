@@ -8,3 +8,7 @@ compose:
 	@docker-compose build
 	@docker-compose up
 
+
+prune:
+	@docker container prune
+
