@@ -1,9 +1,9 @@
 
-from flask_restful import Resource, Api, reqparse
+from flask import jsonify
+from flask_restful import Resource, reqparse
 from .model import UserModel
 from mongoengine import NotUniqueError
 from validate_docbr import CPF
-
 
 
 _user_parser = reqparse.RequestParser()
@@ -27,7 +27,6 @@ _user_parser.add_argument('birth_date',
                           type=str,
                           required=True,
                           help="This field cannot be blank")
-
 
 
 cpf = CPF()
@@ -58,7 +57,3 @@ class User(Resource):
 
             return jsonify(response)
         return {"message": "User does not exist in database"}, 400
-
-
-
-

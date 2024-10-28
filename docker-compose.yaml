@@ -19,6 +19,10 @@ services:
 
     environment:
       - FLASK_ENV=development
+      - MONGODB_DB=users
+      - MONGODB_HOST=mongodb
+      - MONGODB_USER=admin
+      - MONGODB_PASSWD=admin
 
     restart: always
     depends_on:
