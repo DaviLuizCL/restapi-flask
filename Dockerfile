@@ -10,6 +10,8 @@ RUN pip install -r requirements.txt
 
 
 
-COPY app.py .
+COPY wsgi.py .
+COPY config.py .
+COPY application application
 
-CMD ["python", "app.py"]
+CMD ["python", "wsgi.py"]
