@@ -17,3 +17,5 @@ heroku:
 	@heroku container:push -a comunidadedevops-restapi-flask web
 	@heroku container:release -a comunidadedevops-restapi-flask web
 	@heroku ps:scale -a comunidadedevops-restapi-flask web=1
+logs:
+	@heroku logs --tail -a comunidadedevops-restapi-flask
