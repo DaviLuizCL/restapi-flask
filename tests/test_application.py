@@ -41,3 +41,13 @@ class TestApplication():
         response = client.post('/user', json=invalid_user)
         assert response.status_code == 400
         assert b"invalid" in response.data
+
+    def test_get_user(self, client, valid_user):
+        response = client.get(f'/user/{valid_user["cpf"]}')
+        assert response.status_code == 200
+        assert response.json[0]["first_name"] == "Davi"
+        assert response.json[0]["last_name"] == "Lima"
+        assert response.json[0]["cpf"] == "751.457.960-56"
+        assert response.json[0]["email"] == "davizinoftapioca@gmail.com"
+        birth_date = response.json[0]["birth_date"]["$date"]
+        assert birth_date == "2002-07-31T00:00:00Z"
