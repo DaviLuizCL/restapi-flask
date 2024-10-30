@@ -21,7 +21,7 @@ markdown-it-py==2.2.0
 MarkupSafe==2.1.1
 mccabe==0.6.1
 mdurl==0.1.2
-mongoengine==0.24.1
+mongoengine==0.29.1
 mongomock==4.1.2
 mypy-extensions==1.0.0
 packaging==23.1
@@ -32,10 +32,10 @@ pluggy==1.0.0
 pycodestyle==2.8.0
 pyflakes==2.4.0
 Pygments==2.15.1
-pymongo==4.1.1
+pymongo==4.10.1
 pytest==7.3.1
 pytz==2022.1
-PyYAML==6.0.1
+PyYAML==6.0
 rich==13.3.4
 sentinels==1.0.0
 six==1.16.0
