@@ -1,4 +1,4 @@
-# Nome do Projeto
+# REST API FLASK
 
 Uma REST API desenvolvida em Flask, integrada ao MongoDB e totalmente containerizada. Este projeto inclui um banco de dados mockado para desenvolvimento e utiliza o MongoDB Atlas para produção. O ambiente de desenvolvimento é gerenciado com Docker Compose, e a CI/CD é implementada usando Makefile e GitHub Actions, com o deploy realizado no Heroku.
 
