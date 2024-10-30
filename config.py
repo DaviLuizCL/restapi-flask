@@ -1,4 +1,5 @@
 import os
+import mongomock
 
 
 class DevConfig():
@@ -13,21 +14,27 @@ class DevConfig():
 
 
 class ProdConfig:
-    MONGODB_USER = os.getenv('MONGODB_USER')
-    MONGODB_PASSWORD = os.getenv('MONGODB_PASSWORD')
-    MONGODB_HOST = os.getenv('MONGODB_HOST')
+    # MONGO USER
+    MS = os.getenv('MONGODB_USER')
+    # MONGO_PASSWORD
+    MP = os.getenv('MONGODB_PASSWORD')
+    # MONGO_HOST
+    MH = os.getenv('MONGODB_HOST')
     MONGODB_DB = os.getenv('MONGODB_DB')
-    MONGO_APP_NAME = os.getenv('MONGO_APP_NAME')
+    # MONGO APP NAME
+    MPN = os.getenv('MONGO_APP_NAME')
     MONGO_URL = os.getenv('MONGO_URL')
     MONGODB_SETTINGS = {
-        'host': "mongodb+srv://627daviluiz:%s@comunidadedevops-python.xb0cw.mongodb.net/?retryWrites=true&w=majority&appName=comunidadedevops-python" %(MONGODB_PASSWORD)
+        'host': f"mongodb+srv://{MS}:{MP}@{MH}/?{MPN}=comunidadedevops-python"
 
     }
 
 
 class MockConfig:
+    TESTING = True
     MONGODB_SETTINGS = {
-        'db': 'users',
-        'host': 'mongomock://localhost',
-
+        'db': 'test',
+        'host': 'localhost',
+        'port': 27017,
+        'mongo_client_class': mongomock.MongoClient  # Adicione esta linha
     }

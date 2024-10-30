@@ -1,12 +1,13 @@
 import pytest
 from application import create_app
+from config import MockConfig  # Adicione a importação da configuração
 
 
-class TestApplication():
+class TestApplication:
 
     @pytest.fixture
     def client(self):
-        app = create_app('config.MockConfig')
+        app = create_app(MockConfig)  # Use a classe diretamente
         return app.test_client()
 
     @pytest.fixture
@@ -45,9 +46,10 @@ class TestApplication():
     def test_get_user(self, client, valid_user):
         response = client.get(f'/user/{valid_user["cpf"]}')
         assert response.status_code == 200
-        assert response.json[0]["first_name"] == "Davi"
-        assert response.json[0]["last_name"] == "Lima"
-        assert response.json[0]["cpf"] == "751.457.960-56"
-        assert response.json[0]["email"] == "davizinoftapioca@gmail.com"
-        birth_date = response.json[0]["birth_date"]["$date"]
+        user_data = response.get_json()[0]
+        assert user_data["first_name"] == "Davi"
+        assert user_data["last_name"] == "Lima"
+        assert user_data["cpf"] == "751.457.960-56"
+        assert user_data["email"] == "davizinoftapioca@gmail.com"
+        birth_date = user_data["birth_date"]["$date"]
         assert birth_date == "2002-07-31T00:00:00Z"

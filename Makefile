@@ -1,4 +1,4 @@
-APP = restapi
+APP = comunidadedevops-restapi-flask
 
 test:
 	@flake8 . --exclude .venv
@@ -14,8 +14,9 @@ prune:
 	@docker container prune
 
 heroku:
-	@heroku container:push -a comunidadedevops-restapi-flask web
-	@heroku container:release -a comunidadedevops-restapi-flask web
-	@heroku ps:scale -a comunidadedevops-restapi-flask web=1
+	@heroku container:login
+	@heroku container:push -a $(APP) web
+	@heroku container:release -a $(APP) web
+	@heroku ps:scale -a $(APP) web=1
 logs:
-	@heroku logs --tail -a comunidadedevops-restapi-flask
+	@heroku logs --tail -a $(APP)
