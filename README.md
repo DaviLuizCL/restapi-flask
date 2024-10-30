@@ -44,7 +44,7 @@ Para rodar o projeto localmente, siga os passos abaixo:
 4. Rode em ambiente de desenvolvimento:
     ```bash
     make compose
-
+- Fique a vontade para entrar em contato!
 
 
 
