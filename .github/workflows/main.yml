@@ -32,6 +32,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          python-version: '3.10.12'
       - name: deploy to heroku
         run: make heroku
 
