@@ -53,3 +53,23 @@ class TestApplication:
         assert user_data["email"] == "davizinoftapioca@gmail.com"
         birth_date = user_data["birth_date"]["$date"]
         assert birth_date == "2002-07-31T00:00:00Z"
+
+    def test_patch_user(self, client, valid_user):
+        valid_user["first_name"] = "baluloco"
+        response = client.patch('/user', json=valid_user)
+        assert response.status_code == 200
+        assert b"updated" in response.data
+
+        valid_user["cpf"] = "199.624.120-64"
+        response = client.patch('/user', json=valid_user)
+        assert response.status_code == 400
+        assert b"does not exist in database" in response.data
+
+    def test_delete_users(self, client, valid_user):
+        response = client.delete(f'/user/{valid_user["cpf"]}')
+        assert response.status_code == 200
+        assert b"deleted" in response.data
+
+        response = client.delete(f'/user/{valid_user["cpf"]}')
+        assert response.status_code == 400
+        assert b"does not exist in database" in response.data
